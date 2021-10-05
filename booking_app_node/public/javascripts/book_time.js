@@ -52,6 +52,10 @@ ALGORITHM (NEW STUDENT MARKUP)
 ALGORITHM (HANDLE FORM SUBMIT REQUEST)
   - You have two scenarios:
     - Status code 201:
+      - Alert the request response
+      - Submit the first form
+      - Alert that the form was submitted succesfully
+      - Reset page
     - Status code 403:
     - Status code 400;
 */    
@@ -69,9 +73,6 @@ function populateStaffSchedules(allSchedules) {
   
     dropdown.appendChild(newOption);
   });
-
-
-
 }
 
 function buildStaffAndSchedules(data) {
@@ -159,13 +160,16 @@ document.addEventListener('DOMContentLoaded', () => {
       let response = request.response;
       let status = request.status;
       console.log(status);
+      console.log(response);
 
       if (status === 404) {
         alert(response);
 
-        let newForm;
         let bookingSequence = Number(response.split(" ").slice(-1)[0]);
         addNewStudentMarkup(data, bookingSequence);
+      } else {
+        alert('Booked');
+        location.reload();
       }
     });
   });
@@ -210,7 +214,16 @@ function addNewStudentMarkup(data, bookingSequence) {
       request.send(json);
 
       request.addEventListener('load', () => {
-        console.log(request.response);
+        let response = request.response;
+
+        if (request.status === 201) {
+          alert(response);
+
+          let originalFormSubmit = document.querySelector('form').elements[2];
+          originalFormSubmit.click();
+        } else {
+          alert(response);
+        }
       });
     });
   });
