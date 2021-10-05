@@ -64,7 +64,7 @@ function populateStaffSchedules(allSchedules) {
 
     let newOption = document.createElement('option');
     newOption.textContent = currentSchedule;
-    newOption.setAttribute('staff_id', pair[1]);
+    newOption.setAttribute('schedule_id', pair[1]);
     newOption.value = pair[1];
   
     dropdown.appendChild(newOption);
@@ -100,12 +100,17 @@ function buildStaffAndSchedules(data) {
 function createScheduleOption(availableSchedules, staffMemberName, allSchedulesForCurrentStaff) {
   for(key in availableSchedules) {
     let currentSchedule = availableSchedules[key];
+    
+    let studentEmail = currentSchedule.student_email;
+
+    if (studentEmail !== null) { continue }
+
     let date = currentSchedule.date;
     let time = currentSchedule.time;
 
     let string = `${staffMemberName} | ${date} | ${time}`;
 
-    allSchedulesForCurrentStaff.push([string, currentSchedule.staff_id]);
+    allSchedulesForCurrentStaff.push([string, currentSchedule.id]);
   }
 }
 
@@ -134,6 +139,7 @@ document.addEventListener('DOMContentLoaded', () => {
     event.preventDefault();
     
     let formElements = form.elements;
+    console.log(formElements);
     let id = Number(formElements[0].value);
     let studentEmail = formElements[1].value;
 
