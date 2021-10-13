@@ -1,0 +1,66 @@
+html, body {
+  background: rgb(156, 236, 228);
+  margin: 20px;
+}
+
+main {
+  background: white;
+  margin: 0 auto;
+  padding: 20px;
+  max-width: 450px;
+  box-sizing: border-box;
+  display: block;
+}
+
+input {
+  height: 50px;
+  box-sizing: border-box;
+  margin: 0 10px 0 0;
+}
+
+input[type="submit"] {
+  margin: 15px 0 0 0;
+  width: 100%;
+  height: 50px;
+  background: rgb(160, 63, 63);
+  color: white;
+}
+
+input[type="number"] {
+  width: 50px;
+}
+
+input[type="text"] {
+  width: 100%;
+}
+
+p {
+  margin: 3px 0;
+}
+
+h1 {
+  text-align: center;
+  color: rgb(160, 63, 63);
+}
+
+h2 {
+  color: rgb(29, 94, 87);
+  font-weight: bold;
+}
+
+fieldset {
+  border: none;
+}
+
+label {
+  color: rgb(29, 94, 87);
+  font-weight: bold;
+}
+
+li {
+  color: rgb(29, 94, 87);
+}
+
+li + li {
+  border-top: 1px solid lightgray;
+}
