@@ -51,13 +51,24 @@ var inventory;
 
       return found_item;
     },
-    update: function($item) {
-      var id = this.findID($item),
+    update: function(currentItem) {          
+
+      // console.log(currentItem);
+
+      var id = this.findID(currentItem),
           item = this.get(id);
 
-      item.name = $item.find("[name^=item_name]").val();
-      item.stock_number = $item.find("[name^=item_stock_number]").val();
-      item.quantity = $item.find("[name^=item_quantity]").val();
+      // console.log(id, item);
+
+      item.name = currentItem.querySelector("input[name^=item_name]").value;
+      item.stock_number = currentItem.querySelector("input[name^=item_stock_number]").value;
+      item.quantity = currentItem.querySelector("input[name^=item_quantity]").value;
+
+    
+      // item.name = $item.find("[name^=item_name]").val();
+      // item.stock_number = $item.find("[name^=item_stock_number]").val();
+      // item.quantity = $item.find("[name^=item_quantity]").val();
+
     },
     newItem: function(e) {
       e.preventDefault();
@@ -103,9 +114,9 @@ var inventory;
       let target = e.target;
       if (target.tagName !== 'INPUT') { return };
 
-      var $item = this.findParent(e);
+      var item = this.findParent(e);
 
-      this.update($item);
+      this.update(item);
     },
     bindEvents: function() {
       // $("#add_item").on("click", $.proxy(this.newItem, this));
@@ -147,4 +158,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 - findParent Method
   - Utilized in two other methods: deleteItem and updateItem
+
+- update and updateItem methods
+  - Replace jQuery find with vanilla JS querySelector
 */
