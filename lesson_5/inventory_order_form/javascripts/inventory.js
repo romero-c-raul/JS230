@@ -34,6 +34,8 @@ var inventory;
     },
     remove: function(idx) {
       this.collection = this.collection.filter(function(item) {
+        console.log(typeof item.id, typeof idx);
+
         return item.id !== idx;
       });
     },
@@ -67,16 +69,20 @@ var inventory;
       let context = { ID: item.id };
 
       let newItem = this.template(context);
-      console.log(newItem);
+      // console.log(newItem);
 
       document.querySelector('#inventory').insertAdjacentHTML('beforeend', newItem);
       // $("#inventory").append($item);
     },
     findParent: function(e) {
-      return $(e.target).closest("tr");
+      return e.target.closest('tr');
+
+      // return $(e.target).closest("tr");
     },
-    findID: function($item) {
-      return +$item.find("input[type=hidden]").val();
+    findID: function(item) {
+      return Number(item.querySelector('input').value);
+
+      // return +$item.find("input[type=hidden]").val();
     },
     deleteItem: function(e) {
       e.preventDefault();
@@ -87,9 +93,11 @@ var inventory;
         return;
       }
 
-      var $item = this.findParent(e).remove();
+      // var $item = this.findParent(e).remove();
+      let item = this.findParent(e);
+      item.remove();
 
-      this.remove(this.findID($item));
+      this.remove(this.findID(item));
     },
     updateItem: function(e) {
       let target = e.target;
@@ -126,15 +134,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
 /*
 - IMPLEMENTING HANDLEBARS
- 
-- Key points:
-  - Initial implementation of `cacheTemplate` saves the current template as a `template` property of the inventory object (in string form)
-  - This template property is used in one other method: `newItem`
-    - newItem essentially parses through the string and replaces the `id` value with the last item id
+  - Key points:
+    - Initial implementation of `cacheTemplate` saves the current template as a `template` property of the inventory object (in string form)
+    - This template property is used in one other method: `newItem`
+      - newItem essentially parses through the string and replaces the `id` value with the last item id
 
-- How to implement handlebars?
-  - Retrieve the template and get the html
-  - Create a temmplateScript, this function will now be a property of the object
-  - In the `newItem` method, we will pass an object with the new item id, so it can be dynamically replacede
-  - We will append the newly created html to the inventory element
+  - How to implement handlebars?
+    - Retrieve the template and get the html
+    - Create a temmplateScript, this function will now be a property of the object
+    - In the `newItem` method, we will pass an object with the new item id, so it can be dynamically replacede
+    - We will append the newly created html to the inventory element
+
+- findParent Method
+  - Utilized in two other methods: deleteItem and updateItem
 */
