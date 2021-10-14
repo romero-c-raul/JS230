@@ -8,17 +8,11 @@ var inventory;
       var date = new Date();
       let dateElement = document.querySelector('#order_date');
       dateElement.textContent = date.toUTCString();
-      // $("#order_date").text(date.toUTCString());
     },
     cacheTemplate: function() {
-      // var $iTmpl = $("#inventory_item").remove();
-      // console.log($iTmpl);
-      // this.template = $iTmpl.html();
-
       let inventoryItemTemplate = document.querySelector('#template').innerHTML;
       let inventoryTemplateScript = Handlebars.compile(inventoryItemTemplate);
       this.template = inventoryTemplateScript;
-      console.log(inventoryTemplateScript);
     },
     add: function() {
       this.lastId++;
@@ -52,48 +46,28 @@ var inventory;
       return found_item;
     },
     update: function(currentItem) {          
-
-      // console.log(currentItem);
-
       var id = this.findID(currentItem),
           item = this.get(id);
-
-      // console.log(id, item);
 
       item.name = currentItem.querySelector("input[name^=item_name]").value;
       item.stock_number = currentItem.querySelector("input[name^=item_stock_number]").value;
       item.quantity = currentItem.querySelector("input[name^=item_quantity]").value;
-
-    
-      // item.name = $item.find("[name^=item_name]").val();
-      // item.stock_number = $item.find("[name^=item_stock_number]").val();
-      // item.quantity = $item.find("[name^=item_quantity]").val();
-
     },
     newItem: function(e) {
       e.preventDefault();
-
-      // var item = this.add(),
-      //     $item = $(this.template.replace(/ID/g, item.id));
 
       var item = this.add()
       let context = { ID: item.id };
 
       let newItem = this.template(context);
-      // console.log(newItem);
 
       document.querySelector('#inventory').insertAdjacentHTML('beforeend', newItem);
-      // $("#inventory").append($item);
     },
     findParent: function(e) {
       return e.target.closest('tr');
-
-      // return $(e.target).closest("tr");
     },
     findID: function(item) {
       return Number(item.querySelector('input').value);
-
-      // return +$item.find("input[type=hidden]").val();
     },
     deleteItem: function(e) {
       e.preventDefault();
@@ -104,7 +78,6 @@ var inventory;
         return;
       }
 
-      // var $item = this.findParent(e).remove();
       let item = this.findParent(e);
       item.remove();
 
@@ -119,10 +92,6 @@ var inventory;
       this.update(item);
     },
     bindEvents: function() {
-      // $("#add_item").on("click", $.proxy(this.newItem, this));
-      // $("#inventory").on("click", "a.delete", $.proxy(this.deleteItem, this));
-      // $("#inventory").on("blur", ":input", $.proxy(this.updateItem, this));
-
       let addItem = document.querySelector('#add_item');
       let inventoryList = document.querySelector('#inventory');
 
@@ -138,7 +107,6 @@ var inventory;
   };
 })();
 
-// $($.proxy(inventory.init, inventory));
 document.addEventListener('DOMContentLoaded', () => {
   inventory.init();
 });
