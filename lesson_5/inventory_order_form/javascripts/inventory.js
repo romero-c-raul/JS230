@@ -11,9 +11,14 @@ var inventory;
       // $("#order_date").text(date.toUTCString());
     },
     cacheTemplate: function() {
-      var $iTmpl = $("#inventory_item").remove();
-      console.log($iTmpl);
-      this.template = $iTmpl.html();
+      // var $iTmpl = $("#inventory_item").remove();
+      // console.log($iTmpl);
+      // this.template = $iTmpl.html();
+
+      let inventoryItemTemplate = document.querySelector('#template').innerHTML;
+      let inventoryTemplateScript = Handlebars.compile(inventoryItemTemplate);
+      this.template = inventoryTemplateScript;
+      console.log(inventoryTemplateScript);
     },
     add: function() {
       this.lastId++;
@@ -55,10 +60,17 @@ var inventory;
     newItem: function(e) {
       e.preventDefault();
 
-      var item = this.add(),
-          $item = $(this.template.replace(/ID/g, item.id));
+      // var item = this.add(),
+      //     $item = $(this.template.replace(/ID/g, item.id));
 
-      $("#inventory").append($item);
+      var item = this.add()
+      let context = { ID: item.id };
+
+      let newItem = this.template(context);
+      console.log(newItem);
+
+      document.querySelector('#inventory').insertAdjacentHTML('beforeend', newItem);
+      // $("#inventory").append($item);
     },
     findParent: function(e) {
       return $(e.target).closest("tr");
@@ -111,3 +123,18 @@ var inventory;
 document.addEventListener('DOMContentLoaded', () => {
   inventory.init();
 });
+
+/*
+- IMPLEMENTING HANDLEBARS
+ 
+- Key points:
+  - Initial implementation of `cacheTemplate` saves the current template as a `template` property of the inventory object (in string form)
+  - This template property is used in one other method: `newItem`
+    - newItem essentially parses through the string and replaces the `id` value with the last item id
+
+- How to implement handlebars?
+  - Retrieve the template and get the html
+  - Create a temmplateScript, this function will now be a property of the object
+  - In the `newItem` method, we will pass an object with the new item id, so it can be dynamically replacede
+  - We will append the newly created html to the inventory element
+*/
