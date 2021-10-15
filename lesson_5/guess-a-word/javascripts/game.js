@@ -53,7 +53,7 @@ let Game = (() => {
 
   function setBlanksForWordContainer(wordToGuess) {
     removeCurrentBlanks();
-    
+
     let spaces = document.querySelector('#spaces');
 
     for(let index = 0; index < wordToGuess.length; index += 1) {
@@ -83,5 +83,6 @@ let Game = (() => {
     }
   };
 })();
+
 
 new Game();
