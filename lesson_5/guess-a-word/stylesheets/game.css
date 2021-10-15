@@ -94,3 +94,7 @@ h2 {
   margin: 0;
   vertical-align: middle;
 }
+
+#replay {
+  display: none;
+}
