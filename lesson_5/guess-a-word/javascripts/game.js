@@ -56,10 +56,80 @@ document.addEventListener('DOMContentLoaded', () => {
     displayMessage: function(text) {
       message.textContent = text;
     },
+    matchingGuess: function() {
+      let lastGuess = this.letters_guessed.slice(-1)[0];
+      return this.word.includes(lastGuess);
+    },
+    fillBlanks: function(char) {
+      let allSpans = letters.querySelectorAll('span');
+      let spanArr = [].slice.call(allSpans);
+
+      this.word.forEach((currentLetter, index) => {
+        if (char === currentLetter) {
+          this.correct_spaces += 1;
+          spanArr[index].textContent = char;
+        }
+      });
+    },
+
+    registerWrongGuess: function(char) {
+      this.incorrect += 1;
+      // if (this.incorrect >= this.totalAllowedWrongGuesses) {
+      //   guessingGame.endGame();
+      // }
+
+      let applesClass = `guess_${this.incorrect}`;
+      apples.className = applesClass;
+      this.addGuessedLetter(char);
+    },
+
+    registerCorrectGuess: function(char) {
+      this.fillBlanks(char);
+      
+      if (this.correct_spaces >= this.word.length) {
+        this.wonGame();
+      }
+            
+      this.addGuessedLetter(char);
+    },
+
+    wonGame: function() {
+      console.log('You won the game!');
+    },
+
+    addGuessedLetter: function(char) {
+      let newSpan = document.createElement('span');
+      newSpan.textContent = char;
+      guesses.appendChild(newSpan);
+    },
     init: function() {
       this.createBlanks();
+      console.log(this.word);
     }
   }
   
-  new Game();
+  let guessingGame = new Game();
+
+  document.addEventListener('keypress', event => {
+    let char = event.key;
+    let charCode = char.charCodeAt();
+    
+    if (guessingGame.letters_guessed.includes(char)) {
+      return;
+    }
+
+    if (charCode < 97 || charCode > 122) {
+      return;
+    }
+
+    guessingGame.letters_guessed.push(char);
+    
+    if (guessingGame.matchingGuess()) {
+      guessingGame.registerCorrectGuess(char);
+    } else {
+      guessingGame.registerWrongGuess(char);
+    }
+
+    console.log(guessingGame.correct_spaces);
+  });
 });
