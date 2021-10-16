@@ -23,11 +23,12 @@ document.addEventListener('DOMContentLoaded', () => {
     this.incorrect = 0;
     this.letters_guessed = [];
     this.totalAllowedWrongGuesses = 6;
-    this.correct_spaces = 0; // What is this for?
+    this.correct_spaces = 0;
     this.word = randomWord();
 
     if (!this.word) {
       this.displayMessage("Sorry, I've run out of words!");
+      this.hideReplayLink();
       return this;
     }
     
@@ -74,13 +75,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
     registerWrongGuess: function(char) {
       this.incorrect += 1;
-      // if (this.incorrect >= this.totalAllowedWrongGuesses) {
-      //   guessingGame.endGame();
-      // }
-
+      this.addGuessedLetter(char);
+      
       let applesClass = `guess_${this.incorrect}`;
       apples.className = applesClass;
-      this.addGuessedLetter(char);
+
+      if (this.incorrect >= this.totalAllowedWrongGuesses) {
+        guessingGame.gameOver();
+        return;
+      }
     },
 
     registerCorrectGuess: function(char) {
@@ -94,7 +97,9 @@ document.addEventListener('DOMContentLoaded', () => {
     },
 
     wonGame: function() {
-      console.log('You won the game!');
+      document.body.className = "win";
+      this.displayMessage("You won the game!");
+      this.showReplayLink();
     },
 
     addGuessedLetter: function(char) {
@@ -102,10 +107,31 @@ document.addEventListener('DOMContentLoaded', () => {
       newSpan.textContent = char;
       guesses.appendChild(newSpan);
     },
+    gameOver: function() {
+      document.body.className = "lose";
+      this.displayMessage("Sorry! You are out of guesses.");
+      this.showReplayLink();
+    },
+    showReplayLink: function() {
+      replace.style.display = "inline";
+    },
+    hideReplayLink: function() {
+      replace.style.display = "none";
+    },
+    resetLettersGuessed: function() {
+      let allSpans = guesses.querySelectorAll('span');
+      
+      [].forEach.call(allSpans, currentSpan => {
+        currentSpan.remove();
+      });
+    },
+    hideMessage: function() {
+      message.textContent = "";
+    },
     init: function() {
       this.createBlanks();
       console.log(this.word);
-    }
+    },
   }
   
   let guessingGame = new Game();
@@ -131,5 +157,15 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     console.log(guessingGame.correct_spaces);
+  });
+
+  replace.addEventListener('click', event => {
+    guessingGame.hideMessage();
+    guessingGame.hideReplayLink();
+    event.preventDefault();
+    
+    guessingGame = new Game();
+    guessingGame.resetLettersGuessed();
+    document.body.className = "";
   });
 });

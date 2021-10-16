@@ -65,3 +65,13 @@
       - Create a new `<span>` element
         - Change the textContent of the `span` element to the guessed letter
       - Append the span to the `#guesses` event
+
+    - ### Handle a game over
+      - Everytime a wrong guess occurs, we perform a check to see if the incorrect guesses are greater or equal to the total allowed wrong guesses
+        - If true, then we run `endGame` function
+      - `endGame`
+        - Displays a message 
+        - Displays a link to start a new game
+        - Unbinds the keypress event
+    - ### Handle a win
+    - ### Play another game functionality
