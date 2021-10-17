@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function renderPhotos() {
     let slides = document.querySelector('#slides');
-    slides.insertAdjacentHTML('afterbegin', templates.photos({photos: photos}));
+    slides.insertAdjacentHTML('beforeend', templates.photos({photos: photos}));
   }
 
   function renderPhotoInformation(idx) {
@@ -23,7 +23,16 @@ document.addEventListener('DOMContentLoaded', () => {
       return item.id === idx;
     })[0];
 
-    photoInfoHeader.insertAdjacentHTML('afterbegin', templates.photo_information(photo));
+    photoInfoHeader.insertAdjacentHTML('beforeend', templates.photo_information(photo));
+  }
+
+  function getCommentsFor(idx) {
+    fetch(`/comments?photo_id=${idx}`)
+    .then(response => response.json())
+    .then(comments => {
+      let commentsList = document.querySelector('#comments ul');
+      commentsList.insertAdjacentHTML('beforeend', templates.photo_comments({comments: comments}));
+    });
   }
 
   fetch('/photos')
@@ -32,5 +41,6 @@ document.addEventListener('DOMContentLoaded', () => {
     photos = json;
     renderPhotos(json);
     renderPhotoInformation(photos[0].id);
+    getCommentsFor(photos[0].id);    
   });
 });
