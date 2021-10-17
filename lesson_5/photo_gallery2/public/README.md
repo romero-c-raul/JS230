@@ -1,4 +1,4 @@
-# Step 1
+# Step 1 - Render photos and photo information
   - ## Objective:
     - Fetch Photos Data and Render Photos on Page Load
 
