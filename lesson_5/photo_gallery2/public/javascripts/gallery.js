@@ -27,6 +27,10 @@ document.addEventListener('DOMContentLoaded', () => {
       return item.id === idx;
     })[0];
 
+    console.log(photo);
+
+    console.log(templates.photo_information(photo));
+
     photoInfoHeader.insertAdjacentHTML('beforeend', templates.photo_information(photo));
   }
 
@@ -42,12 +46,12 @@ document.addEventListener('DOMContentLoaded', () => {
   let slideshow = {
     displayPreviousElement() {
       this.slidesParent.insertAdjacentElement('afterBegin', this.allSlides[this.allSlides.length - 1]);
-      this.setFormValue(this.allSlides[0]);
+      // this.setFormValue(this.allSlides[0]);
     },
   
     displayNextElement() {
       this.slidesParent.insertAdjacentElement('beforeend', this.allSlides[0]);
-      this.setFormValue(this.allSlides[0])
+      // this.setFormValue(this.allSlides[0])
     },
 
     setFormValue(element) {
@@ -65,7 +69,7 @@ document.addEventListener('DOMContentLoaded', () => {
       
       anchors.addEventListener('click', (event) => { this.navigateSlides(event) });
       likeOrFavoriteSection.addEventListener('click', event => { this.handleLikeOrFavorite(event) });
-      this.form.addEventListener('submit', event => { this.submitForm(event)}, true);
+      // this.form.addEventListener('submit', event => { this.submitForm(event)}, true);
     },
 
     submitForm(event) {
@@ -141,10 +145,20 @@ document.addEventListener('DOMContentLoaded', () => {
       
       this.resetComments();
 
+      console.log(displayedElementId);
+
+      this.updatePhotoJson();
       renderPhotoInformation(displayedElementId);
       getCommentsFor(displayedElementId);
     },
 
+    updatePhotoJson() {
+      fetch('/photos')
+      .then(response => response.json())
+      .then(json => {
+        photos = json;
+      });
+    },
     displayedSlide() {
       this.slidesParent.children[0];
     },
