@@ -97,6 +97,5 @@ document.addEventListener('DOMContentLoaded', () => {
     renderPhotoInformation(photos[0].id);
     getCommentsFor(photos[0].id);    
     slideshow.init();
-    console.log(slideshow);
   });
 });
