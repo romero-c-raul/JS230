@@ -51,3 +51,32 @@
     - The response will be an array of comments
     - Create the context and pass it to the template `photo_comments`
     - Insert the rendered comments as a child of `#comments ul`
+
+# Step 3 - Create the slideshow functionality
+  - ## Objective:
+    - Implement the features that allow users to navigate through the photos like a slideshow
+  
+  - ## Requirements:
+    - Attach events to the previous and next anchors to fade out the current photo and fade in the new one at the same time
+    - If we're on the first photo and click "previous", we loop to the last one.
+      - Clicking "next" when on the last one should bring the first photo
+    - Each slide transition should also render the photo details for that photo below it
+    - When the slideshow is advanced, request and render the comments for that photo
+
+  - ## Implementation:
+    - Add two event listeners on the previous and next anchors
+    - For the previous anchor:
+      - The last last children of slides will be moved to the top of slides
+      - If I click previous, I will move the last children to be the first in row
+      - Example:  
+        ```javascript
+        parent.insertAdjacentElement('afterBegin', allSlides[allSlides.length - 1]);
+        ```
+      - Render the corresponding info for the photo
+
+    - For the next anchor:
+      - The first child would be moved to be last
+      - Example:
+        ```javascript
+        parent.insertAdjacentElement('beforeend', allSlides[0]);
+        ```

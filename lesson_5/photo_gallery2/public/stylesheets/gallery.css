@@ -66,10 +66,17 @@ a.favorite {
   margin: 0;
   width: 100%;
   height: 784px;
+  opacity: 100;
+  transition: opacity 2s;
 }
 
-#slides figure + figure {
+/* #slides figure + figure {
   display: none;
+} */
+
+#slides figure + figure {
+  opacity: 0;
+  transition: opacity 1s;
 }
 
 #slides img {
