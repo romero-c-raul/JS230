@@ -84,3 +84,30 @@
 # Step 4 - Like and Favorite Photo
   - ## Objective:
     - Allow the user to click on the like and favorite button and consequently increment the respective counts
+
+  - ## API Needed:
+    - Like a photo:
+      - Path: `/photos/like`
+        - Send `photo_id` as the data
+      - HTTP Method: `POST`
+
+    - Favorite a photo:
+      - Path: `/photos/favorite`
+        - Send `photo_id` as the data
+      - HTTP Method: `POST`
+
+    - Both of these end points respond with a JSON object with a total. Use that to update the numbers on the buttons
+      ```javascript
+        {
+          total: 6
+        }
+      ```
+
+  - ## Implementation
+    - Two event listeners are needed: One for like and another for favorite
+    - For like button:
+      - Submit a post request
+      - Use the response to update the count of likes
+    - For favorite button:
+      - Submit a post request
+      - Use the response to update the count of favorites

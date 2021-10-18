@@ -54,8 +54,39 @@ document.addEventListener('DOMContentLoaded', () => {
     },
 
     bind() {
-      let anchors = document.querySelector('#slideshow ul'); 
+      let anchors = document.querySelector('#slideshow ul');
+      let likeOrFavoriteSection = document.querySelector('main section');
+      
       anchors.addEventListener('click', (event) => { this.navigateSlides(event) });
+      likeOrFavoriteSection.addEventListener('click', event => { this.handleLikeOrFavorite(event) })
+    },
+
+    handleLikeOrFavorite(event) {
+      event.preventDefault();
+      let target = event.target;
+
+      if (target.tagName !== 'A') {
+        return;
+      }
+
+      let path = target.getAttribute('href');
+      let displayedSlideId = this.allSlides[0].dataset.id;
+      
+      fetch(path, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ 
+          photo_id: displayedSlideId 
+        })
+      })
+      .then(response => response.json())
+      .then(json => {
+        let total = json.total;
+        let newString = target.textContent.replace(/\d+/, total);
+        target.textContent = newString;
+      });
     },
 
     navigateSlides(event) {
