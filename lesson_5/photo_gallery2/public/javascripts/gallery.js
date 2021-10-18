@@ -65,8 +65,6 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
       } 
 
-      console.log(this.allSlides);
-
       event.preventDefault();
 
       if (target.className === 'prev') {
@@ -79,7 +77,7 @@ document.addEventListener('DOMContentLoaded', () => {
       let displayedElementId = Number(displayedElement.dataset.id);
       
       this.resetComments();
-      
+
       renderPhotoInformation(displayedElementId);
       getCommentsFor(displayedElementId);
     },
