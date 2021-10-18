@@ -111,3 +111,34 @@
     - For favorite button:
       - Submit a post request
       - Use the response to update the count of favorites
+
+
+# Step 5: Add a New Comment for a Photo
+  - ## Objective
+    - Allow the user to add comments
+    - We're going to add a submit callback to the comment form that will serialize and send data to the server
+
+  - ## API Used
+    - Path: `/comments/new`
+    - HTTP method: POST
+    - The server will save the comment and return a JSON object back with the same data with a `date` property
+    ```javascript
+      {
+        "name": "Shane Riley",
+        "photo_id": 1,
+        "gravatar": "http://gravatar.com/avatar/9f6f9c0b100d371267f07a12f73edf9d",
+        "date": "3/31/15",
+        "body": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
+      }
+    ```
+    - The server is expective the data as a set of parameters in the structure of a query string
+      Example: 
+        ```javascript 
+               photo_id=1&name=Bill&email=bill%40gmail.com&body=some+random+comment   
+        ```
+    
+  - ## Implementation
+    - Add an event listener to handle the `submit` element on the form
+    - Use formdata to obtain all the info from the form
+    - Use URLSearch params to convert the form data to the format required by server
+    - Submit a `POST` request to the path provided

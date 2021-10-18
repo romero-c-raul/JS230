@@ -42,10 +42,16 @@ document.addEventListener('DOMContentLoaded', () => {
   let slideshow = {
     displayPreviousElement() {
       this.slidesParent.insertAdjacentElement('afterBegin', this.allSlides[this.allSlides.length - 1]);
+      this.setFormValue(this.allSlides[0]);
     },
   
     displayNextElement() {
       this.slidesParent.insertAdjacentElement('beforeend', this.allSlides[0]);
+      this.setFormValue(this.allSlides[0])
+    },
+
+    setFormValue(element) {
+      document.querySelector('input[type=hidden]').value = element.dataset.id;
     },
   
     resetComments() {
@@ -55,16 +61,42 @@ document.addEventListener('DOMContentLoaded', () => {
 
     bind() {
       let anchors = document.querySelector('#slideshow ul');
-      let likeOrFavoriteSection = document.querySelector('main section');
+      let likeOrFavoriteSection = document.querySelector('section header');
       
       anchors.addEventListener('click', (event) => { this.navigateSlides(event) });
-      likeOrFavoriteSection.addEventListener('click', event => { this.handleLikeOrFavorite(event) })
+      likeOrFavoriteSection.addEventListener('click', event => { this.handleLikeOrFavorite(event) });
+      this.form.addEventListener('submit', event => { this.submitForm(event)}, true);
+    },
+
+    submitForm(event) {
+      event.preventDefault();
+      let formData = new FormData(this.form);
+      let urlString = new URLSearchParams(formData).toString();
+      let path = event.target.action;
+
+      console.log(urlString);
+
+      fetch(path, {
+        method: 'POST',
+        headers: {
+          'Content-type': 'application/x-www-form-urlencoded; charset=UTF-8'
+        },
+        body: urlString,
+      })
+      .then(response => response.json())
+      .then(json => {
+        let commentsList = document.querySelector('#comments ul');
+        let newComment = templates.photo_comment(json);
+        commentsList.insertAdjacentHTML('beforeend',newComment);
+        this.form.reset();
+      });
     },
 
     handleLikeOrFavorite(event) {
       event.preventDefault();
       let target = event.target;
 
+      console.log('Handle like or favorite');
       if (target.tagName !== 'A') {
         return;
       }
@@ -113,9 +145,14 @@ document.addEventListener('DOMContentLoaded', () => {
       getCommentsFor(displayedElementId);
     },
 
+    displayedSlide() {
+      this.slidesParent.children[0];
+    },
+
     init() {
       this.slidesParent = document.querySelector('#slides');
       this.allSlides = this.slidesParent.children;
+      this.form = document.querySelector('form');
       this.bind();
     },
   }
