@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function renderPhotos() {
     let slides = document.querySelector('#slides');
-    slides.insertAdjacentHTML('beforeend', templates.photos({photos: photos}));
+    slides.insertAdjacentHTML('beforeend', templates.photos({ photos: photos }));
   }
 
   function renderPhotoInformation(idx) {
