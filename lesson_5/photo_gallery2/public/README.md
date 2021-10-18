@@ -80,3 +80,7 @@
         ```javascript
         parent.insertAdjacentElement('beforeend', allSlides[0]);
         ```
+
+# Step 4 - Like and Favorite Photo
+  - ## Objective:
+    - Allow the user to click on the like and favorite button and consequently increment the respective counts
