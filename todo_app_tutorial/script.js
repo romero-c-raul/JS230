@@ -43,6 +43,8 @@ class Model {
     this.todos = this.todos.map(todo => {
       return todo.id === id ? {id: todo.id, text: todo.text, complete: !todo.complete} : todo;
     });
+
+    this.onTodoListChanged(this.todos);
   }
 
   bindOnTodoListChanged(callback) {
@@ -105,7 +107,6 @@ class View {
   }
 
   _resetInput() {
-    console.log(this);
     this.input.value = '';
   }
 
@@ -116,6 +117,8 @@ class View {
     
     tempDiv.innerHTML = listItemString;
     listItem = tempDiv.firstElementChild;
+
+    listItem.firstElementChild.checked = todo.complete;
 
     this.todoList.append(listItem);
   }
@@ -142,7 +145,6 @@ class View {
 
       if (this._todoText) {
         handler(this._todoText);
-        console.log('This is working!');
         this._resetInput();
       }
     });
@@ -162,7 +164,16 @@ class View {
   }
 
   bindToggleTodo(handler) {
+    this.todoList.addEventListener('change', event => {
+      let target = event.target;
 
+      if (target.type === 'checkbox') {
+        event.preventDefault();
+
+        let listItemId = parseInt(target.closest('li').id, 10);
+        handler(listItemId);
+      }
+    });
   }
 }
 
@@ -174,8 +185,10 @@ class Controller {
     this.onTodoListChanged(this.model.todos);
 
     this.model.bindOnTodoListChanged(this.onTodoListChanged);
+
     this.view.bindAddTodo(this.handleAddTodo);
     this.view.bindDeleteTodo(this.handleDeleteTodo);
+    this.view.bindToggleTodo(this.handleToggleTodo);
   }
 
   onTodoListChanged = (todos) => {
