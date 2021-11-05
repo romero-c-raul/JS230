@@ -175,6 +175,17 @@ class View {
       }
     });
   }
+
+  bindEditTodo(handler) {
+    this.todoList.addEventListener('focusout', event => {
+      let target = event.target;
+
+      if (target.className === 'editable') {
+        let listItem = target.closest('li');
+        handler(Number(listItem.id), target.textContent);
+      }
+    });
+  }
 }
 
 class Controller {
@@ -189,6 +200,7 @@ class Controller {
     this.view.bindAddTodo(this.handleAddTodo);
     this.view.bindDeleteTodo(this.handleDeleteTodo);
     this.view.bindToggleTodo(this.handleToggleTodo);
+    this.view.bindEditTodo(this.handleEditTodo);
   }
 
   onTodoListChanged = (todos) => {
