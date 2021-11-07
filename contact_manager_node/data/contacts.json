@@ -19,40 +19,5 @@
     "email": "ph@example.com",
     "phone_number": "54321098761",
     "tags": null
-  },
-  {
-    "full_name": "Raul",
-    "phone_number": "23423423",
-    "email": "random@ran.com",
-    "tags": "Marine Biology",
-    "id": 4
-  },
-  {
-    "full_name": "Colleen M",
-    "phone_number": "444555333",
-    "email": "c@gmail.com",
-    "tags": "Marine Biology",
-    "id": 5
-  },
-  {
-    "full_name": "Paul",
-    "phone_number": "000000",
-    "email": "sadfsadf@saf",
-    "tags": "DUNC",
-    "id": 6
-  },
-  {
-    "full_name": "Gon",
-    "phone_number": "555-444-333",
-    "email": "g@gmail.com",
-    "tags": "Hunter",
-    "id": 7
-  },
-  {
-    "full_name": "Killua",
-    "phone_number": "666666666",
-    "email": "k@gmail.com",
-    "tags": "Assasin",
-    "id": 8
   }
 ]

@@ -37,6 +37,7 @@ class View {
         name: contact.full_name,
         number: contact.phone_number,
         email: contact.email,
+        id: contact.id,
       });
 
       tempDiv.innerHTML = contactHtml;
@@ -86,6 +87,17 @@ class View {
     });
   }
 
+  bindDeleteContact(handler) {
+    this.contactList.addEventListener('click', event => {
+      let target = event.target;
+
+      if (target.tagName === 'A' && target.className === 'delete') {
+        event.preventDefault();
+        handler(target.getAttribute('href'));
+      }
+    });
+  }
+
   genereateFormScript() {
     let template = document.getElementById('submission-form').innerHTML;
     let script = Handlebars.compile(template);
@@ -115,6 +127,7 @@ class Controller {
     this.model.bindOnContactListChanged(this.onContactListChanged);
 
     this.view.bindDisplayAddContactForm(this.handleAddContact);
+    this.view.bindDeleteContact(this.handleDeleteContact);
   }
 
   getAllContacts() {
@@ -133,12 +146,19 @@ class Controller {
       headers: {'Content-Type': "application/x-www-form-urlencoded"},
       body: contactData,
     })
-    .then(response => console.log(response))
-    .then(data => {
-      console.log(data);
+    .then(() => {
       this.getAllContacts();
       this.view.removeForm();
       this.view.displayMainPage();
+    });
+  }
+
+  handleDeleteContact = (path) => {
+    fetch(path, {
+      method: 'DELETE',
+    })
+    .then(() => {
+      this.getAllContacts();
     });
   }
 

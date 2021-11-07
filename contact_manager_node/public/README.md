@@ -70,4 +70,16 @@
       - An event listener for `reset` event will also be added
         - When a `reset` event happens, the form will be removed and the main page will re-appear
     
-      
+  ### 3. Removing a Contact
+    #### Objective
+      - Implement functionality that allows us to remove a contact
+      - When clicking on remove contact, we must submit a `DELETE` request, update our `Model`'s `contacts` property, and re-render the page
+
+    #### Steps
+      - Modify the template to make it so the delete anchor's `href` property has the following path: `/api/contacts/:id`
+      - Define a method `bindDeleteContact` on `View`
+        - This method will register an event listener on `ul#contact-list` that will only fire if the target was an anchor element with the `delete` class
+
+  ### 4. Edit a Contact
+    #### Object
+    #### Steps
