@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="/javascripts/jquery.js"></script>
+  <script src="/javascripts/handlebars.js"></script>
+  <script src="/javascripts/script.js"></script>
+  <script id="list-item" type="text/x-handlebars-template">
+    <li>
+      <h2>{{name}}</h2>
+      <dl>
+        <dt>Phone Number</dt>
+        <dd>{{number}}</dd>
+        <dt>Email</dt>
+        <dd>{{email}}</dd>
+      </dl>
+    </li>
+  </script>
+</head>
+<body>
+  <h1>Contact Manager</h1>
+  <div id="root">
+    <div id="top-row">
+      <a href="#">Add Contact</a>
+      <input type="text" placeholder="Search">
+    </div>
+    <div id="contacts">
+      <ul id="contact-list"></ul>
+    </div>
+  </div>
+</body>
+</html>
