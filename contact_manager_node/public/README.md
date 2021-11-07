@@ -43,6 +43,31 @@
       - We will do this with Handlebars
     - We will find the `div#contacts` and add the elements that represent all the contacts
   - Handlebars template will be defined in script tag on index file
-    - 
+
+  ### 2. Adding a Contact
+
+  #### Objective
+    - Implement functionality that allows user to add a contact and render it on the screen
+    - When clicking on add a contact, we need to display a form that we will use to submit the contact info
+
+  #### Steps
+    - Define a form on a template that will be stored in the `index` file
+      - This form will have three input fields, a submit button, and a cancel button 
+      - This template will have a variable name, since it will be used to either add a contact or edit a contact
+    - Hide elements with class `main` and append the template to `div#root`
+    - Write a method `bindAddContact` that will register an event listener for the `add contact` button
+      - When clicking on `Add contact`, the elements with class `main` will be hidden
+        - We will use Handlebars to render the form that we need
+        - Append that form to the end of `div#root`
+      - Add an event listener for the submit button
+        - This event listener will call the handler when submit is pressed
+        - Data will be collected from the form
+          - Data must either be in json or query string
+        - Data is then passed to the handler `handleAddContact`
+          - This handler will perform a post request
+          - `Model` contacts property will be updated
+          - Main page with all contacts will be shown again
+      - An event listener for `reset` event will also be added
+        - When a `reset` event happens, the form will be removed and the main page will re-appear
     
       

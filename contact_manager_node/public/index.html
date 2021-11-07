@@ -12,22 +12,43 @@
     <li>
       <h2>{{name}}</h2>
       <dl>
-        <dt>Phone Number</dt>
+        <dt>Phone Number:</dt>
         <dd>{{number}}</dd>
-        <dt>Email</dt>
+        <dt>Email:</dt>
         <dd>{{email}}</dd>
       </dl>
+      <div>
+        <a href="#">Edit</a>
+        <a href="#">Delete</a>
+      </div>
     </li>
+  </script>
+  <script id="submission-form" type="text/x-handlebars-template">
+    <form action="#">
+      <fieldset>
+        <h2>{{type}}</h1>
+        <label for="full_name">Full Name</label><br>
+        <input type="text" name="full_name"><br>
+        <label for="email">Email</label><br>
+        <input type="email" name="email"><br>
+        <label for="phone_number">Phone Number</label><br>
+        <input type="text" name="phone_number"><br>
+        <label for="tags">Tags</label><br>
+        <input type="text" name="tags"><br>
+        <button type="submit" class="submit">Submit</button>
+        <button type="reset" class="cancel">Cancel</button>
+      </fieldset>
+    </form>
   </script>
 </head>
 <body>
   <h1>Contact Manager</h1>
   <div id="root">
-    <div id="top-row">
-      <a href="#">Add Contact</a>
+    <div id="top-row" class="main">
+      <a href="#" class="add-contact">Add Contact</a>
       <input type="text" placeholder="Search">
     </div>
-    <div id="contacts">
+    <div id="contacts" class="main">
       <ul id="contact-list"></ul>
     </div>
   </div>
