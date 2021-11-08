@@ -6,7 +6,7 @@ class Model {
 
   updateContacts(contactsData) {
     this.contacts = contactsData;
-    this.onContactListChanged(this.contacts);
+    this.onContactListChanged(this.contacts, 'allContacts');
   }
 
   findMatchingContactNames(string) {
@@ -22,7 +22,7 @@ class Model {
       return contact.full_name.match(pattern);
     });
 
-    this.onContactListChanged(matchingContacts);
+    this.onContactListChanged(matchingContacts, 'filteredContacts');
   }
 
   bindOnContactListChanged(callback) {
@@ -49,14 +49,26 @@ class View {
     } 
   }
 
-  displayAllContacts(contactsData) {
+  displayEmptyContactsMessage(keyword) {
+    let paragraph = document.createElement('p');
+    let text;
+
+    if (keyword === 'allContacts') {
+      text = 'There are no contacts.';
+    } else {
+      let searchValue = this.searchBar.value;
+      text = 'There are no matches for ' + `"${searchValue}"`;
+    }
+
+    paragraph.textContent = text;
+    this.contactList.appendChild(paragraph);
+  }
+
+  displayContacts(contactsData, keyword) {
     this.resetContactList();
 
     if (contactsData.length < 1) {
-      let paragraph = document.createElement('p');
-
-      paragraph.textContent = 'There are no contacts.';
-      this.contactList.appendChild(paragraph);
+      this.displayEmptyContactsMessage(keyword);
     } else {
       let tempDiv = document.createElement('div');
   
@@ -74,6 +86,8 @@ class View {
       });
     }
   }
+
+  displayFilteredContacts
 
   generateListItemScript() {
     let template = document.querySelector('#list-item').innerHTML;
@@ -269,8 +283,8 @@ class Controller {
     this.model.findMatchingContactNames(string);
   }
 
-  onContactListChanged = (contactsData) => {
-    this.view.displayAllContacts(contactsData);
+  onContactListChanged = (contactsData, keyword) => {
+    this.view.displayContacts(contactsData, keyword);
   }
 }
 

@@ -1,1 +1,30 @@
-[]
+[
+  {
+    "full_name": "Raul R",
+    "phone_number": "33333333",
+    "email": "raul@gmail.com",
+    "tags": "engineer",
+    "id": 1
+  },
+  {
+    "full_name": "Colleen M",
+    "phone_number": "222-666-777",
+    "email": "c@gmail.com",
+    "tags": "marine biology",
+    "id": 2
+  },
+  {
+    "full_name": "Gon",
+    "phone_number": "",
+    "email": "g@gmail.com",
+    "tags": "hunter",
+    "id": 3
+  },
+  {
+    "full_name": "Killua",
+    "phone_number": "666666666",
+    "email": "k@gmail.com",
+    "tags": "assassin",
+    "id": 4
+  }
+]
