@@ -272,6 +272,7 @@ class View {
 
   bindSearchFunction(handler) {
     this.searchBar.addEventListener('keyup', event => {
+      this.clearTagSelection();
       let target = event.target;
       let string = target.value;
       handler(string);
@@ -301,11 +302,23 @@ class View {
     }
   }
 
+  clearTagSelection() {
+    let allCheckboxes = this.tagList.querySelectorAll('[type=checkbox]');
+    console.log(allCheckboxes);
+    allCheckboxes.forEach(checkbox => checkbox.checked = false);
+  }
+
+  clearSearchBar() {
+    this.searchBar.value = '';
+  }
+
   bindSelectingTag(handler) {
     this.tagList.addEventListener('click', event => {
       let target = event.target;
 
       if (target.type === 'checkbox') {
+        this.clearSearchBar();
+
         let checkedTags = [];
         let parent = target.closest('div#tag-list');
         let allCheckboxes = [...parent.querySelectorAll('input')];
