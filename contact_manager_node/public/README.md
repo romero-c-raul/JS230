@@ -79,7 +79,16 @@
       - Modify the template to make it so the delete anchor's `href` property has the following path: `/api/contacts/:id`
       - Define a method `bindDeleteContact` on `View`
         - This method will register an event listener on `ul#contact-list` that will only fire if the target was an anchor element with the `delete` class
+        - Will take a method `handleDeleteContact` as an argument, it will get called when the anchor element is pressed
+      - Method `handleDeleteContact` will be defined on `Controller`. This method will submit the post request using the path obtained from the target
 
   ### 4. Edit a Contact
     #### Object
+      - Implement functionality to edit contacts
+      - We need to add an event listener for the `Edit Contact` anchor element. 
+        - This event listener will bring up the edit form, with the previous information already filled out, a method will be called from the `Controller` class to submit a `PUT` request, then the contacts will be re-rendered
+
     #### Steps
+      - Define method `bindDisplayEditContactForm` that will hide the main page and display the contact form
+        - An event listener will be added to the contact list, that will fire if anchor elements with class `edit` are clicked
+        - After clicking `Edit` the form will be displayed, with the fields filled in
