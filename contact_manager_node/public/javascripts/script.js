@@ -59,6 +59,19 @@ class Model {
 
     this.onTagListChanged(this.tags);
   }
+
+  filterContacts(tags) {
+    let matches;
+
+    matches = this.contacts.filter(contact => {
+      let contactTags = contact.tags.split(',');
+      return tags.every(tag => {
+        return contactTags.includes(tag);
+      });
+    });
+
+    this.onContactListChanged(matches, 'tagFilter');
+  }
 }
 
 class View {
@@ -102,9 +115,11 @@ class View {
 
     if (keyword === 'allContacts') {
       text = 'There are no contacts.';
-    } else {
+    } else if (keyword === 'filteredContacts'){
       let searchValue = this.searchBar.value;
       text = 'There are no matches for ' + `"${searchValue}"`;
+    } else if (keyword === 'tagFilter') {
+      text = 'There are no contacts with these tags.'
     }
 
     paragraph.textContent = text;
@@ -285,6 +300,26 @@ class View {
       });
     }
   }
+
+  bindSelectingTag(handler) {
+    this.tagList.addEventListener('click', event => {
+      let target = event.target;
+
+      if (target.type === 'checkbox') {
+        let checkedTags = [];
+        let parent = target.closest('div#tag-list');
+        let allCheckboxes = [...parent.querySelectorAll('input')];
+        
+        allCheckboxes.forEach(checkbox => {
+          if (checkbox.checked) {
+            checkedTags.push(checkbox.value);
+          }
+        });
+
+        handler(checkedTags);
+      }
+    })
+  }
 }
 
 class Controller {
@@ -301,6 +336,7 @@ class Controller {
     this.view.bindDisplayEditContactForm(this.handleEditContact);
     this.view.bindDeleteContact(this.handleDeleteContact);
     this.view.bindSearchFunction(this.handleSearchFunction);
+    this.view.bindSelectingTag(this.handleSelectingTag);
   }
 
   getContactsAndUpdateModel() {
@@ -331,7 +367,6 @@ class Controller {
       method: 'DELETE',
     })
     .then(() => {
-      console.log('controller 1');
       this.getContactsAndUpdateModel();
     });
   }
@@ -346,7 +381,7 @@ class Controller {
       this.getContactsAndUpdateModel();
       this.view.removeForm();
       this.view.displayMainPage();
-    })
+    });
   }
 
   handleSearchFunction = (string) => {
@@ -359,6 +394,10 @@ class Controller {
 
   onTagListChanged = (allTags) => {
     this.view.displayTags(allTags);
+  }
+
+  handleSelectingTag = (tag) => {
+    this.model.filterContacts(tag)
   }
 }
 

@@ -44,8 +44,8 @@
   </script>
   <script id="tag-template" type="text/x-handlebars-template">
     <label>
+      <input type="checkbox" name="tag" value={{tagName}}>
       {{tagName}}
-      <input type="radio" name="tag" value={{tagName}}>
     </label>
   </script>
 </head>
@@ -56,7 +56,7 @@
       <a href="#" class="add-contact">Add Contact</a>
       <input type="text" class="search" placeholder="Search">
     </div>
-    <div id="tag-list">Filter by Tags:
+    <div id="tag-list">Filter by Tag:
 
     </div>
     <div id="contacts" class="main">

@@ -120,5 +120,7 @@
       - Implement functionality that shows all tags on the main page. When a tag is clicked, all elements with that tag will be shown. Only one tag can be clicked at a time
     #### Steps
       - Write a method that, when contacts are updated, a list of tags from those contacts is generated (no duplicates)
-      - Add event listeners that fire when you click on one of the radio buttons
+      - Add event listeners that fire when you click on one of the checkbox buttons
+      - Every time we mark a checkbox we check all the checkboxes to see which ones are checked
+      - We will filter out the contacts whose tags all match the ones that were checked
       

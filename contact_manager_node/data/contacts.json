@@ -3,7 +3,7 @@
     "full_name": "Gon",
     "phone_number": "",
     "email": "",
-    "tags": "enhancer,emmiter,transmuter",
+    "tags": "enhancer,emitter,transmuter",
     "id": 3
   },
   {
@@ -14,7 +14,7 @@
     "id": 4
   },
   {
-    "full_name": "Kurapika",
+    "full_name": "Kurapikt",
     "phone_number": "",
     "email": "",
     "tags": "conjurer,specialist",
@@ -40,5 +40,19 @@
     "email": "",
     "tags": "manipulator",
     "id": 8
+  },
+  {
+    "full_name": "Razor",
+    "phone_number": "",
+    "email": "",
+    "tags": "emitter",
+    "id": 9
+  },
+  {
+    "full_name": "Chrollo",
+    "phone_number": "",
+    "email": "",
+    "tags": "specialist",
+    "id": 10
   }
 ]
