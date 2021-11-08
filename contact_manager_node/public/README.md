@@ -89,6 +89,8 @@
         - This event listener will bring up the edit form, with the previous information already filled out, a method will be called from the `Controller` class to submit a `PUT` request, then the contacts will be re-rendered
 
     #### Steps
-      - Define method `bindDisplayEditContactForm` that will hide the main page and display the contact form
+      - Define method `bindDisplayEditContactForm` that will hide the main page and display the contact form. This method will take a callback `handleEditContact`
         - An event listener will be added to the contact list, that will fire if anchor elements with class `edit` are clicked
         - After clicking `Edit` the form will be displayed, with the fields filled in
+        - A `submit` event listener will be added. This event listener will fire the callback, and the callback will perform a `PUT` request
+        - Page will be updated to reflect up to date contact info
