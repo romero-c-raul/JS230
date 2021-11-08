@@ -114,3 +114,10 @@
         - This method will add an event listener to `input.search` that will call the handler `handleSearchFunction` when a `keyup` event is experienced
       - `handleSearchFunction` will make use of the `Model` method `findMatchingContactNames`. This method returns a collection of contacts that matched our search string
         - Then the `Model` method `onContactListChanged` is called to tell the `View` to update our website
+
+  ### 7. Filter Elements by Tags
+    #### Objective
+      - Implement functionality that shows all tags on the main page. When a tag is clicked, all elements with that tag will be shown. Only one tag can be clicked at a time
+    #### Steps
+      - Write a method that, when contacts are updated, a list of tags from those contacts is generated (no duplicates)
+      

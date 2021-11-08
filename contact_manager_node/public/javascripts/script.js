@@ -2,13 +2,15 @@ class Model {
   constructor() {
     this.contacts = null;
     this.onContactListChanged = null;
+    this.onTagListChanged = null;
     this.tags = null;
   }
 
   updateContacts(contactsData) {
     this.contacts = contactsData;
-    this.updateTags();
     this.onContactListChanged(this.contacts, 'allContacts');
+    console.log('Model');
+    this.updateTags();
   }
 
   findMatchingContactNames(string) {
@@ -31,20 +33,32 @@ class Model {
     this.onContactListChanged = callback;
   }
 
+  bindOnTagListChanged(callback) {
+    this.onTagListChanged = callback;
+  }
+
   updateTags() {
     let tags = [];
 
-    this.contacts.forEach(contact => {
-      let allTags = contact.tags.split(',');
-
-      allTags.forEach(tag => {
-        if (!tags.includes(tag)) {
-          tags.push(tag);
-        }
+    if (this.contacts.length > 0) {
+      this.contacts.forEach(contact => {
+        let allTags = contact.tags.split(',');
+  
+        allTags.forEach(tag => {
+          if (!tags.includes(tag)) {
+            console.log('tag');
+            tags.push(tag);
+          }
+        });
+  
+        this.tags = tags;
+        console.log(this.tags);
       });
+    } else {
+      this.tags = null;
+    }
 
-      this.tags = tags;
-    });
+    this.onTagListChanged(this.tags);
   }
 }
 
@@ -52,11 +66,13 @@ class View {
   constructor() {
     this.root = document.querySelector('#root');
     this.contactList = document.querySelector('#contact-list');
+    this.tagList = document.querySelector('#tag-list');
     this.addContactButton = document.querySelector('.add-contact');
     this.searchBar = document.querySelector('.search');
 
     this.listItemScript = this.generateListItemScript();
     this.formScript = this.genereateFormScript();
+    this.tagScript = this.generateTagScript();
   }
 
   resetContactList() {
@@ -65,6 +81,20 @@ class View {
         this.contactList.removeChild(this.contactList.firstChild);
       }
     } 
+  }
+
+  resetTagList() {
+    if (this.tagList.children.length > 0) {
+      while (this.tagList.firstElementChild) {
+        this.tagList.removeChild(this.tagList.firstElementChild);
+      }
+    }
+  }
+
+  generateTagScript() {
+    let template = document.querySelector('#tag-template').innerHTML;
+    let script = Handlebars.compile(template);
+    return script;
   }
 
   displayEmptyContactsMessage(keyword) {
@@ -104,8 +134,6 @@ class View {
       });
     }
   }
-
-  displayFilteredContacts
 
   generateListItemScript() {
     let template = document.querySelector('#list-item').innerHTML;
@@ -235,6 +263,29 @@ class View {
       handler(string);
     });
   }
+
+  displayNoTagCreatedMessage() {
+    let paragraph = document.createElement('paragraph');
+    paragraph.textContent = 'You have not defined any tags.';
+
+    this.tagList.appendChild(paragraph);
+  }
+
+  displayTags(tags) {
+    this.resetTagList();
+
+    if (!tags) {
+      this.displayNoTagCreatedMessage();
+    } else {
+      tags.forEach(tag => {
+        let tempDiv = document.createElement('div');
+        let radioElement = this.tagScript({tagName: tag});
+        tempDiv.innerHTML = radioElement;
+  
+        this.tagList.appendChild(tempDiv.firstElementChild);
+      });
+    }
+  }
 }
 
 class Controller {
@@ -245,6 +296,7 @@ class Controller {
     this.getContactsAndUpdateModel();
 
     this.model.bindOnContactListChanged(this.onContactListChanged);
+    this.model.bindOnTagListChanged(this.onTagListChanged);
 
     this.view.bindDisplayAddContactForm(this.handleAddContact);
     this.view.bindDisplayEditContactForm(this.handleEditContact);
@@ -258,6 +310,7 @@ class Controller {
     })
     .then(response => response.json())
     .then(data => {
+      console.log('controller 2');
       this.model.updateContacts(data);
     });
   }
@@ -280,6 +333,7 @@ class Controller {
       method: 'DELETE',
     })
     .then(() => {
+      console.log('controller 1');
       this.getContactsAndUpdateModel();
     });
   }
@@ -303,6 +357,10 @@ class Controller {
 
   onContactListChanged = (contactsData, keyword) => {
     this.view.displayContacts(contactsData, keyword);
+  }
+
+  onTagListChanged = (allTags) => {
+    this.view.displayTags(allTags);
   }
 }
 

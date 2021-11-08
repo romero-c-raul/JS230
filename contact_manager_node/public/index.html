@@ -42,6 +42,12 @@
       </fieldset>
     </form>
   </script>
+  <script id="tag-template" type="text/x-handlebars-template">
+    <label>
+      {{tagName}}
+      <input type="radio" name="tag" value={{tagName}}>
+    </label>
+  </script>
 </head>
 <body>
   <h1>Contact Manager</h1>
@@ -49,6 +55,9 @@
     <div id="top-row" class="main">
       <a href="#" class="add-contact">Add Contact</a>
       <input type="text" class="search" placeholder="Search">
+    </div>
+    <div id="tag-list">Filter by Tags:
+
     </div>
     <div id="contacts" class="main">
       <ul id="contact-list"></ul>
