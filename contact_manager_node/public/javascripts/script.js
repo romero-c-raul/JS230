@@ -2,10 +2,12 @@ class Model {
   constructor() {
     this.contacts = null;
     this.onContactListChanged = null;
+    this.tags = null;
   }
 
   updateContacts(contactsData) {
     this.contacts = contactsData;
+    this.updateTags();
     this.onContactListChanged(this.contacts, 'allContacts');
   }
 
@@ -27,6 +29,22 @@ class Model {
 
   bindOnContactListChanged(callback) {
     this.onContactListChanged = callback;
+  }
+
+  updateTags() {
+    let tags = [];
+
+    this.contacts.forEach(contact => {
+      let allTags = contact.tags.split(',');
+
+      allTags.forEach(tag => {
+        if (!tags.includes(tag)) {
+          tags.push(tag);
+        }
+      });
+
+      this.tags = tags;
+    });
   }
 }
 
