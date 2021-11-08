@@ -1,9 +1,44 @@
 [
   {
-    "full_name": "Colleen M",
-    "phone_number": "23423423",
-    "email": "c@gmail.com",
-    "tags": "marine, biology",
-    "id": 2
+    "full_name": "Gon",
+    "phone_number": "",
+    "email": "",
+    "tags": "enhancer,emmiter,transmuter",
+    "id": 3
+  },
+  {
+    "full_name": "Killua",
+    "phone_number": "",
+    "email": "",
+    "tags": "transmuter",
+    "id": 4
+  },
+  {
+    "full_name": "Kurapika",
+    "phone_number": "",
+    "email": "",
+    "tags": "conjurer,specialist",
+    "id": 5
+  },
+  {
+    "full_name": "Leorio",
+    "phone_number": "",
+    "email": "",
+    "tags": "emitter",
+    "id": 6
+  },
+  {
+    "full_name": "Hisoka",
+    "phone_number": "",
+    "email": "",
+    "tags": "transmuter",
+    "id": 7
+  },
+  {
+    "full_name": "Shalnark",
+    "phone_number": "",
+    "email": "",
+    "tags": "manipulator",
+    "id": 8
   }
 ]

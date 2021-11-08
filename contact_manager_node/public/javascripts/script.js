@@ -9,7 +9,6 @@ class Model {
   updateContacts(contactsData) {
     this.contacts = contactsData;
     this.onContactListChanged(this.contacts, 'allContacts');
-    console.log('Model');
     this.updateTags();
   }
 
@@ -45,14 +44,14 @@ class Model {
         let allTags = contact.tags.split(',');
   
         allTags.forEach(tag => {
-          if (!tags.includes(tag)) {
-            console.log('tag');
+          if (tags.includes(tag)) {
+            return;
+          } else {
             tags.push(tag);
           }
         });
   
         this.tags = tags;
-        console.log(this.tags);
       });
     } else {
       this.tags = null;
@@ -310,7 +309,6 @@ class Controller {
     })
     .then(response => response.json())
     .then(data => {
-      console.log('controller 2');
       this.model.updateContacts(data);
     });
   }

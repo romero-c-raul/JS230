@@ -120,4 +120,5 @@
       - Implement functionality that shows all tags on the main page. When a tag is clicked, all elements with that tag will be shown. Only one tag can be clicked at a time
     #### Steps
       - Write a method that, when contacts are updated, a list of tags from those contacts is generated (no duplicates)
+      - Add event listeners that fire when you click on one of the radio buttons
       
