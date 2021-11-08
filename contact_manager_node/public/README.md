@@ -83,7 +83,7 @@
       - Method `handleDeleteContact` will be defined on `Controller`. This method will submit the post request using the path obtained from the target
 
   ### 4. Edit a Contact
-    #### Object
+    #### Objective
       - Implement functionality to edit contacts
       - We need to add an event listener for the `Edit Contact` anchor element. 
         - This event listener will bring up the edit form, with the previous information already filled out, a method will be called from the `Controller` class to submit a `PUT` request, then the contacts will be re-rendered
@@ -94,3 +94,21 @@
         - After clicking `Edit` the form will be displayed, with the fields filled in
         - A `submit` event listener will be added. This event listener will fire the callback, and the callback will perform a `PUT` request
         - Page will be updated to reflect up to date contact info
+
+  ### 5. Implement Search Function (On `Model`, name only)
+    #### Objective
+      - Implement a function on the `Model` that takes in a string as an argument, and returns the first contact that starts with the given string
+
+    #### Steps
+      - Method takes a string as an argument
+      - We will use `filter` to iterate through each contact in `contacts` property in `Model`
+        - For each contact, we will return `true` if the `name` starts with the given string
+      - Return filtered contacts
+
+  ### 6. Implement event listeners for search function
+    #### Objective
+      - Implement event listeners on `View` that listen to a keypress that occurs on the search bar `input.search`
+    
+    #### Steps
+      - Define a method in `View` called `bindSearchFunction`
+        - This method will add an event listener to `input.search` that will call the handler `handleSearchFunction` when a `keyup` event is experienced

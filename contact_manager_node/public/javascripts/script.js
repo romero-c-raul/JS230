@@ -9,6 +9,22 @@ class Model {
     this.onContactListChanged(this.contacts);
   }
 
+  findMatchingContactNames(string) {
+    if (string.length < 1) {
+      this.onContactListChanged(this.contacts);
+    }
+
+    let matchingContacts;
+
+    matchingContacts = this.contacts.filter(contact => {
+      let pattern = new RegExp(`^${string}`, 'i');
+
+      return contact.full_name.match(pattern);
+    });
+
+    this.onContactListChanged(matchingContacts);
+  }
+
   bindOnContactListChanged(callback) {
     this.onContactListChanged = callback;
   }
@@ -19,31 +35,44 @@ class View {
     this.root = document.querySelector('#root');
     this.contactList = document.querySelector('#contact-list');
     this.addContactButton = document.querySelector('.add-contact');
+    this.searchBar = document.querySelector('.search');
+
     this.listItemScript = this.generateListItemScript();
     this.formScript = this.genereateFormScript();
   }
 
-  displayAllContacts(contactsData) {
+  resetContactList() {
     if (this.contactList.children.length > 0) {
       while (this.contactList.firstElementChild) {
         this.contactList.removeChild(this.contactList.firstChild);
       }
     } 
+  }
 
-    let tempDiv = document.createElement('div');
+  displayAllContacts(contactsData) {
+    this.resetContactList();
 
-    contactsData.forEach(contact => {
-      let contactHtml = this.listItemScript({
-        name: contact.full_name,
-        number: contact.phone_number,
-        email: contact.email,
-        id: contact.id,
-        tags: contact.tags,
+    if (contactsData.length < 1) {
+      let paragraph = document.createElement('p');
+
+      paragraph.textContent = 'There are no contacts.';
+      this.contactList.appendChild(paragraph);
+    } else {
+      let tempDiv = document.createElement('div');
+  
+      contactsData.forEach(contact => {
+        let contactHtml = this.listItemScript({
+          name: contact.full_name,
+          number: contact.phone_number,
+          email: contact.email,
+          id: contact.id,
+          tags: contact.tags,
+        });
+  
+        tempDiv.innerHTML = contactHtml;
+        this.contactList.appendChild(tempDiv.firstElementChild);
       });
-
-      tempDiv.innerHTML = contactHtml;
-      this.contactList.appendChild(tempDiv.firstElementChild);
-    });
+    }
   }
 
   generateListItemScript() {
@@ -58,6 +87,7 @@ class View {
   }
 
   displayMainPage() {
+    this.searchBar.value = '';
     let mainPageElements = document.querySelectorAll('.main');
     [...mainPageElements].forEach(ele => ele.style.display = 'block');
   }
@@ -165,6 +195,14 @@ class View {
     let form = document.querySelector('form');
     form.remove();
   }
+
+  bindSearchFunction(handler) {
+    this.searchBar.addEventListener('keyup', event => {
+      let target = event.target;
+      let string = target.value;
+      handler(string);
+    });
+  }
 }
 
 class Controller {
@@ -179,6 +217,7 @@ class Controller {
     this.view.bindDisplayAddContactForm(this.handleAddContact);
     this.view.bindDisplayEditContactForm(this.handleEditContact);
     this.view.bindDeleteContact(this.handleDeleteContact);
+    this.view.bindSearchFunction(this.handleSearchFunction);
   }
 
   getContactsAndUpdateModel() {
@@ -224,6 +263,10 @@ class Controller {
       this.view.removeForm();
       this.view.displayMainPage();
     })
+  }
+
+  handleSearchFunction = (string) => {
+    this.model.findMatchingContactNames(string);
   }
 
   onContactListChanged = (contactsData) => {
