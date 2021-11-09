@@ -368,10 +368,14 @@ class Controller {
       headers: {'Content-Type': "application/x-www-form-urlencoded"},
       body: contactData,
     })
-    .then(() => {
-      this.getContactsAndUpdateModel();
-      this.view.removeForm();
-      this.view.displayMainPage();
+    .then((res) => {
+      if (res.status === 201) {
+        this.getContactsAndUpdateModel();
+        this.view.removeForm();
+        this.view.displayMainPage();
+      } else {
+        alert('Name is required');
+      }
     });
   }
 
@@ -390,10 +394,14 @@ class Controller {
       headers: {'Content-Type': "application/x-www-form-urlencoded"},
       body: contactData,
     })
-    .then(() => {
-      this.getContactsAndUpdateModel();
-      this.view.removeForm();
-      this.view.displayMainPage();
+    .then((res) => {
+      if (res.status === 201) {
+        this.getContactsAndUpdateModel();
+        this.view.removeForm();
+        this.view.displayMainPage();
+      } else {
+        alert('Name is required');
+      }
     });
   }
 
@@ -406,7 +414,14 @@ class Controller {
   }
 
   onTagListChanged = (allTags) => {
-    this.view.displayTags(allTags);
+    console.log(allTags);
+
+    if (allTags === null || allTags[0] === '') {
+      this.view.displayTags(null);
+     } else {
+       this.view.displayTags(allTags);
+     }
+
   }
 
   handleSelectingTag = (tag) => {
